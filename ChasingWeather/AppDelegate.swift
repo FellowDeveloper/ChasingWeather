@@ -31,8 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var serviceLocator: ServiceLocator?
     
     private func customiseStatusBarAppearance(){
-        UINavigationBar.appearance().backgroundColor = .systemTeal // backgorund color with gradient
-        // or
+        UINavigationBar.appearance().backgroundColor = UIConstants.appBackgroundColor
+
         UINavigationBar.appearance().barTintColor = .white  // solid color
             
         UIBarButtonItem.appearance().tintColor = .white

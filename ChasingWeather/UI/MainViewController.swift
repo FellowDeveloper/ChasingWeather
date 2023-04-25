@@ -7,11 +7,29 @@
 
 import UIKit
 
-class HistoryViewController: UITableViewController {
+extension UIView {
+    class func fromNib<T: UIView>() -> T {
+        return Bundle(for: T.self).loadNibNamed(String(describing: T.self), owner: nil, options: nil)![0] as! T
+    }
+}
+
+class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet var weatherViewPlaceholder: UIView!
+    @IBOutlet var previousSearshesTable: UITableView!
+    var weatherView: WeatherView?
+    
+    private func updateUi()
+    {
+        if let weatherView = weatherView, let report = reports.first{
+            weatherView.nameLabel.text = report.name
+            self.previousSearshesTable?.reloadData()
+        }
+    }
     
     var reports: [NamedWeatherReport] = [] {
         didSet {
+            
             if let picController = serviceLocator?.picsController {
                 let picIds = Set(reports.map( { $0.report.weather[0].icon }))
                 picController.updateAndStartFetchingMissingLogos(picIds: Array(picIds))
@@ -21,29 +39,39 @@ class HistoryViewController: UITableViewController {
     var serviceLocator: AppDelegate.ServiceLocator!
     
     @objc func weatherImageLoaded(_ notification: Notification) {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let weatherView: WeatherView = .fromNib()
         
-        title = "Reports History"
+        weatherView.translatesAutoresizingMaskIntoConstraints = false
+        weatherViewPlaceholder.addSubview(weatherView)
+        
+        let constraints = [
+            weatherView.topAnchor.constraint(equalTo: weatherViewPlaceholder.safeAreaLayoutGuide.topAnchor),
+            weatherView.leftAnchor.constraint(equalTo: weatherViewPlaceholder.leftAnchor),
+            weatherView.rightAnchor.constraint(equalTo: weatherViewPlaceholder.rightAnchor),
+            weatherView.bottomAnchor.constraint(equalTo: weatherViewPlaceholder.bottomAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
+    
+        
         self.view.backgroundColor = UIConstants.appBackgroundColor
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.serviceLocator = appDelegate.serviceLocator
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 50
-        tableView.register(UINib(nibName: "PrevSearchesCell", bundle: nil), forCellReuseIdentifier: "previous-searches-cell")
+        self.previousSearshesTable.rowHeight = UITableView.automaticDimension
+        self.previousSearshesTable.estimatedRowHeight = 50
+        previousSearshesTable.register(UINib(nibName: "PrevSearchesCell", bundle: nil), forCellReuseIdentifier: "previous-searches-cell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.reports = serviceLocator.weatherDataController.reports
-        self.tableView.reloadData()
-        super.viewWillAppear(animated)
+        updateUi()
         
+        super.viewWillAppear(animated)
         NotificationCenter.default
                           .addObserver(self,
                                        selector: #selector(weatherImageLoaded),
@@ -57,21 +85,25 @@ class HistoryViewController: UITableViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reports.count
-    }
-    
     private func showDetails(of report:NamedWeatherReport) {
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: UIConstants.showDetailsSequeId, sender: report)
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    // MARK - TableViewDelegate / DataSource
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return reports.count
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showDetails(of: reports[indexPath.row])
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "previous-searches-cell") as? PrevSearchesCell {
             cell.backgroundColor = UIConstants.appBackgroundColor
             cell.nameLabel?.textColor = UIConstants.appTextColor
