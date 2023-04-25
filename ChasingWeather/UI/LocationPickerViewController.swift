@@ -8,6 +8,21 @@
 import UIKit
 import MapKit
 
+/*
+ * TODOs and Nice To Haves
+ *
+ * Extract annotation view so a separate file
+ *
+ * UX: Optimize. Design. Not quite clear what is happening...
+ *   Long press gets coordinate and starts async name fetch
+ *   On name fetch annotation is added
+ *   Annotation can be tapped to show callout with button
+ *   Callout button gets user to weather report details screen from this location...
+ *
+ * Magic numbers, strings and access control tweaks
+ */
+
+
 class CustomAnnotationView: MKMarkerAnnotationView {
     
     var callout : (() -> ())?
@@ -23,7 +38,6 @@ class CustomAnnotationView: MKMarkerAnnotationView {
         let btn = UIButton(type: .infoLight)
         btn.addTarget(self, action: #selector(calloutCallback), for: .touchUpInside)
         rightCalloutAccessoryView = btn
-        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -55,31 +69,38 @@ class LocationPickerViewController: UIViewController, MKMapViewDelegate {
         
         
         
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.revealRegionDetailsWithLongPressOnMap(sender:)))
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.addPinAndStartFetchingCity(sender:)))
         mapView.addGestureRecognizer(longPressRecognizer)
     }
     
-    @IBAction func revealRegionDetailsWithLongPressOnMap(sender: UILongPressGestureRecognizer) {
+    fileprivate func removeMapAnnotations() {
+        if let oldAnnotation = self.annotation {
+            self.mapView.removeAnnotations([oldAnnotation])
+        }
+    }
+    
+    fileprivate func addAnnotation(_ name: String, _ coordinate: CLLocationCoordinate2D) {
+        let annotation = MKPointAnnotation()
+        annotation.title = name
+        annotation.coordinate = coordinate
+        self.mapView.addAnnotation(annotation)
+        self.annotation = annotation
+    }
+    
+    @IBAction func addPinAndStartFetchingCity(sender: UILongPressGestureRecognizer) {
         if sender.state != UIGestureRecognizer.State.began { return }
+        
         let touchLocation = sender.location(in: mapView)
         let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
-        print("Tapped at lat: \(locationCoordinate.latitude) long: \(locationCoordinate.longitude)")
-        
         let location = CLLocation(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude)
-        location.fetchCityAndCountry { city, country, error in
-            print("City: \(String(describing: city)), country: \(String(describing: country)), err: \(String(describing: error))")
-            
-            if let oldAnnotation = self.annotation {
-                self.mapView.removeAnnotations([oldAnnotation])
+        
+        self.removeMapAnnotations()
+        location.fetchCityAndCountry {
+            [weak self]
+            city, country, error in
+            if let city = city {
+                self?.addAnnotation(city, location.coordinate)
             }
-            
-            
-            
-            let annotation = MKPointAnnotation()
-            annotation.title = city
-            annotation.coordinate = CLLocationCoordinate2D(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude)
-            self.mapView.addAnnotation(annotation)
-            self.annotation = annotation
         }
     }
     
@@ -95,7 +116,6 @@ class LocationPickerViewController: UIViewController, MKMapViewDelegate {
         
         annotationView?.annotation = annotation
         annotationView?.callout = {
-            print("Yay, \(annotation.coordinate), \(String(describing: annotation.title))")
             let coord = Coordinate(lat: annotation.coordinate.latitude, lon: annotation.coordinate.longitude)
             if let optName = annotation.title, let name = optName {
                 self.serviceLocator.weatherDataController.getWeather(coord, name: name ) {
@@ -106,7 +126,6 @@ class LocationPickerViewController: UIViewController, MKMapViewDelegate {
                     }
                 }
             }
-
         }
 
         return annotationView

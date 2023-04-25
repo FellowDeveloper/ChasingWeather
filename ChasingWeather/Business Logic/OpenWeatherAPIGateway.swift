@@ -10,9 +10,10 @@ import Foundation
 struct OpenWeatherAPIGateway {
     let requestsHandler: URLRequestHandling
     let apiKey: String
+    var units = "imperial"
     
     private func requestUrl(for coordinate: Coordinate) -> URL {
-        return URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(coordinate.lat)&lon=\(coordinate.lon)&appid=\(apiKey)")!
+        return URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(coordinate.lat)&lon=\(coordinate.lon)&appid=\(apiKey)&units=\(units)")!
     }
     
     enum DataRetrivingErrors : Error {

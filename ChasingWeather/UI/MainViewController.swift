@@ -13,6 +13,17 @@ extension UIView {
     }
 }
 
+/*
+ * TODOs and nice to haves
+ *
+ * Remove coupling with app delegate in favor of DI
+ * Explicitly subscribe to missing icons and only reload cells that do not have it
+ * Would be nice to have loading / placeholder pic for unloaded icons
+ * Extract date / viewmodel formatting logic out of this view controller
+ * Use something more declarative for view reloading. Combine maybe?
+ *
+ */
+
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var weatherViewPlaceholder: UIView!
@@ -22,7 +33,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func updateUi()
     {
         if let weatherView = weatherView, let report = reports.first{
-            weatherView.nameLabel.text = report.name
+            weatherView.report = report
             self.previousSearshesTable?.reloadData()
         }
     }
@@ -41,30 +52,45 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @objc func weatherImageLoaded(_ notification: Notification) {
 
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let weatherView: WeatherView = .fromNib()
-        
-        weatherView.translatesAutoresizingMaskIntoConstraints = false
-        weatherViewPlaceholder.addSubview(weatherView)
-        
-        let constraints = [
-            weatherView.topAnchor.constraint(equalTo: weatherViewPlaceholder.safeAreaLayoutGuide.topAnchor),
-            weatherView.leftAnchor.constraint(equalTo: weatherViewPlaceholder.leftAnchor),
-            weatherView.rightAnchor.constraint(equalTo: weatherViewPlaceholder.rightAnchor),
-            weatherView.bottomAnchor.constraint(equalTo: weatherViewPlaceholder.bottomAnchor)
-        ]
-        NSLayoutConstraint.activate(constraints)
     
-        
-        self.view.backgroundColor = UIConstants.appBackgroundColor
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        self.serviceLocator = appDelegate.serviceLocator
+    private func pinWeatherViewToPlaceholder() {
+        if weatherViewPlaceholder == nil {
+            return
+        }
+        if weatherView == nil {
+            let weatherView: WeatherView = .fromNib()
+            
+            weatherView.translatesAutoresizingMaskIntoConstraints = false
+            weatherViewPlaceholder.addSubview(weatherView)
+            
+            let constraints = [
+                weatherView.topAnchor.constraint(equalTo: weatherViewPlaceholder.safeAreaLayoutGuide.topAnchor),
+                weatherView.leftAnchor.constraint(equalTo: weatherViewPlaceholder.leftAnchor),
+                weatherView.rightAnchor.constraint(equalTo: weatherViewPlaceholder.rightAnchor),
+                weatherView.bottomAnchor.constraint(equalTo: weatherViewPlaceholder.bottomAnchor)
+            ]
+            NSLayoutConstraint.activate(constraints)
+            self.weatherView = weatherView
+        }
+    }
+    
+    private func configurePrevSearchesTable() {
         self.previousSearshesTable.rowHeight = UITableView.automaticDimension
         self.previousSearshesTable.estimatedRowHeight = 50
         previousSearshesTable.register(UINib(nibName: "PrevSearchesCell", bundle: nil), forCellReuseIdentifier: "previous-searches-cell")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //UI Config
+        pinWeatherViewToPlaceholder()
+        configurePrevSearchesTable()
+        self.view.backgroundColor = UIConstants.appBackgroundColor
+        
+        //TODO: Get rid of coupling with app delegate in favor of DI
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        self.serviceLocator = appDelegate.serviceLocator
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +98,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         updateUi()
         
         super.viewWillAppear(animated)
+        
         NotificationCenter.default
                           .addObserver(self,
                                        selector: #selector(weatherImageLoaded),
@@ -92,6 +119,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // MARK - TableViewDelegate / DataSource
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //TODO: Extract magic numbers
+        let headerTitleLabel = UILabel(frame: CGRectMake(0, 0, self.view.frame.size.width, 60))
+        headerTitleLabel.textAlignment = .center
+        headerTitleLabel.textColor = UIConstants.appTextColor
+        headerTitleLabel.backgroundColor = UIConstants.appBackgroundColor
+        headerTitleLabel.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
+        headerTitleLabel.text = "Prev reports"
+        
+        return headerTitleLabel
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return reports.count
@@ -130,6 +168,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         fatalError("ERROR! Cell not registered for PreviousSearchesViewController")
     }
+    
     
     @IBAction func showCurrent(_ sender: UIControl) {
         if let location = serviceLocator.locationProvider.currentLocation {

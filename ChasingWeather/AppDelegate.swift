@@ -31,25 +31,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var serviceLocator: ServiceLocator?
     
     private func customiseStatusBarAppearance(){
+        
         UINavigationBar.appearance().backgroundColor = UIConstants.appBackgroundColor
-
-        UINavigationBar.appearance().barTintColor = .white  // solid color
-            
-        UIBarButtonItem.appearance().tintColor = .white
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-        
-        
-//        var navigationBarAppearace = UINavigationBar.appearance()
-//
-//        navigationBarAppearace.tintColor = UIColor.white
-//        navigationBarAppearace.barTintColor = UIColor.black
+        UINavigationBar.appearance().barTintColor = UIConstants.navBarTintColor
+        UIBarButtonItem.appearance().tintColor = UIConstants.appTintColor
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIConstants.navBarTextColor]
     }
 
-
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-     
-        
+    fileprivate func configureAppDependencies() {
         // Centralized place of dependencies creation. Objects needing dependency do not create them but ask the service locator
         // Object implementations can be swapped based on environment
         // (ex switch between memory and file store for debug / prod, stubs with network request data for unit tests, etc...
@@ -61,16 +50,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let persister = WeatherDataPersister()
         let dataController = WeatherDataController(fetcher:weatherApiGateway , persister: persister)
         
-        #if targetEnvironment(simulator)
-            let locationProvider = LocationProviderFake()
-        #else
-            let locationProvider = LocationController()
-        
-        #endif
+#if targetEnvironment(simulator)
+        let locationProvider = LocationProviderFake()
+#else
+        //let locationProvider = LocationController()
+        let locationProvider = LocationProviderFake()
+#endif
         
         self.serviceLocator = ServiceLocator(weatherDataController: dataController, urlRequestsHandler: requestsHandler, locationProvider: locationProvider, picsController: picsController)
-        
-        
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+     
+        configureAppDependencies()
         customiseStatusBarAppearance()
         
         return true
