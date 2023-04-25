@@ -19,6 +19,12 @@ class HistoryViewController: UITableViewController {
         }
     }
     var serviceLocator: AppDelegate.ServiceLocator!
+    
+    @objc func weatherImageLoaded(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +41,20 @@ class HistoryViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.reports = serviceLocator.weatherDataController.reports
-        super.viewWillAppear(animated)
         self.tableView.reloadData()
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default
+                          .addObserver(self,
+                                       selector: #selector(weatherImageLoaded),
+                                       name: NSNotification.Name (NotificationNames.picCacheUpdated),
+                                       object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -1,13 +1,14 @@
 # Example Weather Fetching App
 
-sample iOS app with a couple of simple screens to showcase some good and some not so good techniques
+Sample iOS app with a couple of simple screens to showcase some good and some not so good techniques
 
 ### Not so good - Navigation
-Storyboard based navigation and passing parameters with "prepareForSegue" is error prone and exposes target view controller implementation. I feel like something along the user intent handling pattern would serve better for navigation.
+Storyboard based navigation and passing parameters with "prepareForSegue" is error prone and exposes target view controller implementation.
+
+I feel like something along the user intent handling pattern would serve better for navigation.
 
 ### Not so good - Data Structs
 Views use data structs mapped 1:1 from JSON. Better to flatten response and extract what is needed only
-
 
 
 ## Dependencies Centralization
@@ -26,11 +27,13 @@ Data Parsing
 
 App uses fake location engine when run in sumulator to simplify development & testing
 
-## Misc iOS 
+## Misc iOS concepts
 * Performing storyboard based view controller transition
 * Notification Posting / Listening
-* Custom table view cell loading from separate xib file
+* Custom table view cell view design in separate xib
+* Custom table view cell registration
 * Custom map annotation view with callout
-
+* Saving / loading files (image icon cashe)
+* Saving small bits of data (reposts history in user defaults)
 
 
