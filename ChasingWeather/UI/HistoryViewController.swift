@@ -65,7 +65,10 @@ class HistoryViewController: UITableViewController {
             
             cell.nameLabel.text = report.name
             cell.descriptionLabel.text = reports[indexPath.row].report.weather.first?.main
-            cell.dateLabel.text = "\(report.created)"
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "d MMM @ HH:mm"
+            cell.dateLabel.text = formatter.string(from: report.created)
             
             if let pic = serviceLocator.picsController.cachedPic(report.report.weather[0].icon)
             {

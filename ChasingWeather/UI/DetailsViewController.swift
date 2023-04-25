@@ -21,6 +21,7 @@ class DetailsViewController: UIViewController {
     var report : NamedWeatherReport?
 
     @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
     @IBOutlet var mainDesriptionLabel: UILabel!
     @IBOutlet var degreesLabel: UILabel!
     @IBOutlet var windSpeed: UILabel!
@@ -50,13 +51,18 @@ class DetailsViewController: UIViewController {
             nameLabel.text = report.name
             mainDesriptionLabel.text = report.report.weather[0].main
             degreesLabel.text = "Temp: \(report.report.main.temp)"
+            let dateExtractor = DateFormatter()
+            dateExtractor.dateFormat = "d MMM y, E"
+            dateLabel.text = dateExtractor.string(from: report.created)
             
             //TODO: Date formatting to have time only
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
             let sunrize = Date(timeIntervalSince1970:Double(report.report.sys.sunrise))
-            sunrizeLabel.text = "Sunrize: \(sunrize)"
+            sunrizeLabel.text = "Sunrize: \(formatter.string(from: sunrize))"
             
             let sunset = Date(timeIntervalSince1970:Double(report.report.sys.sunset))
-            sunsetLabel.text = "Sunset: \(sunset)"
+            sunsetLabel.text = "Sunset: \(formatter.string(from:sunset))"
             
             windSpeed.text = "Wind speed: \(report.report.wind.speed)"
             windDirection.text = "Wind direction: \(report.report.wind.deg)"

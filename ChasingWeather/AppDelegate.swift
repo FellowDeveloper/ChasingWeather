@@ -29,6 +29,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     var serviceLocator: ServiceLocator?
+    
+    private func customiseStatusBarAppearance(){
+        UINavigationBar.appearance().backgroundColor = .systemTeal // backgorund color with gradient
+        // or
+        UINavigationBar.appearance().barTintColor = .white  // solid color
+            
+        UIBarButtonItem.appearance().tintColor = .white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        
+        
+//        var navigationBarAppearace = UINavigationBar.appearance()
+//
+//        navigationBarAppearace.tintColor = UIColor.white
+//        navigationBarAppearace.barTintColor = UIColor.black
+    }
 
 
 
@@ -54,6 +69,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
         
         self.serviceLocator = ServiceLocator(weatherDataController: dataController, urlRequestsHandler: requestsHandler, locationProvider: locationProvider, picsController: picsController)
+        
+        
+        customiseStatusBarAppearance()
         
         return true
     }

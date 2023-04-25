@@ -32,7 +32,7 @@
             <objects>
                 <tableViewController id="ngP-vd-dxx" customClass="HistoryViewController" customModule="ChasingWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="FiF-sX-S0W">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
@@ -78,7 +78,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <segue destination="868-CA-InL" kind="show" identifier="show-report-details" id="1N7-Xm-UZj"/>
                     </connections>
@@ -92,11 +91,11 @@
             <objects>
                 <viewController id="OZa-GQ-snL" customClass="LocationPickerViewController" customModule="ChasingWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dYv-KE-vH7">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LdD-rt-DWh">
-                                <rect key="frame" x="0.0" y="-59" width="393" height="808"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="749"/>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                                 <connections>
                                     <outlet property="delegate" destination="OZa-GQ-snL" id="rnq-qq-WmJ"/>
@@ -104,10 +103,10 @@
                             </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ftW-OU-5ke"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemTealColor"/>
                         <constraints>
                             <constraint firstItem="ftW-OU-5ke" firstAttribute="trailing" secondItem="LdD-rt-DWh" secondAttribute="trailing" id="5U2-wH-W3X"/>
-                            <constraint firstItem="LdD-rt-DWh" firstAttribute="top" secondItem="ftW-OU-5ke" secondAttribute="top" constant="-59" id="6c5-zH-3Dm"/>
+                            <constraint firstItem="LdD-rt-DWh" firstAttribute="top" secondItem="ftW-OU-5ke" secondAttribute="top" id="6c5-zH-3Dm"/>
                             <constraint firstItem="LdD-rt-DWh" firstAttribute="leading" secondItem="ftW-OU-5ke" secondAttribute="leading" id="Rlo-DX-1nn"/>
                             <constraint firstItem="ftW-OU-5ke" firstAttribute="bottom" secondItem="LdD-rt-DWh" secondAttribute="bottom" constant="-34" id="zeA-6q-nrD"/>
                         </constraints>
@@ -127,11 +126,11 @@
             <objects>
                 <viewController storyboardIdentifier="detailed-report-vc-id" id="868-CA-InL" customClass="DetailsViewController" customModule="ChasingWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CJo-9G-ZR4">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="uM1-do-9ZG">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="715"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="San Jose" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sp-IL-Wya">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="37"/>
@@ -145,38 +144,44 @@
                                         <color key="textColor" systemColor="systemYellowColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18*" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91v-kU-0rE">
+                                        <rect key="frame" x="0.0" y="91" width="393" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="textColor" systemColor="systemYellowColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mostly Clear" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtH-VD-Uby">
-                                        <rect key="frame" x="0.0" y="91" width="393" height="37"/>
+                                        <rect key="frame" x="0.0" y="136" width="393" height="37"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="31"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind Speed: 18mph" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IjC-vm-8oO">
-                                        <rect key="frame" x="0.0" y="137" width="393" height="25.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="182" width="393" height="25.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind Direction: NW" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tyc-5Q-Dd6">
-                                        <rect key="frame" x="0.0" y="171.33333333333331" width="393" height="25.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="216.33333333333331" width="393" height="25.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunrise: early" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFp-DQ-VW1">
-                                        <rect key="frame" x="0.0" y="205.66666666666669" width="393" height="25.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="250.66666666666671" width="393" height="25.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunset: late" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5f-vy-YjS">
-                                        <rect key="frame" x="0.0" y="240" width="393" height="25.333333333333314"/>
+                                        <rect key="frame" x="0.0" y="285" width="393" height="25.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8K4-Cv-Bve" userLabel="Spacer">
-                                        <rect key="frame" x="0.0" y="274.33333333333326" width="393" height="440.66666666666674"/>
+                                        <rect key="frame" x="0.0" y="319.33333333333326" width="393" height="395.66666666666674"/>
                                         <color key="backgroundColor" systemColor="systemTealColor"/>
                                     </view>
                                 </subviews>
@@ -193,6 +198,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="qXt-aH-WeB"/>
                     <connections>
+                        <outlet property="dateLabel" destination="91v-kU-0rE" id="StQ-Q3-nWe"/>
                         <outlet property="degreesLabel" destination="OYZ-Ch-Ng2" id="HQe-PZ-ewp"/>
                         <outlet property="mainDesriptionLabel" destination="WtH-VD-Uby" id="FdG-Rp-4lb"/>
                         <outlet property="nameLabel" destination="5Sp-IL-Wya" id="oNR-pH-B0a"/>
@@ -204,11 +210,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0J3-fn-Jr5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-709" y="-162"/>
+            <point key="canvasLocation" x="-790" y="-60"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wCJ-Pn-unO"/>
+        <segue reference="1N7-Xm-UZj"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="location" catalog="system" width="128" height="121"/>
