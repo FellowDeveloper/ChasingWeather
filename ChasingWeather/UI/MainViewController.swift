@@ -14,7 +14,7 @@ extension UIView {
 }
 
 /*
- * TODOs and nice to haves
+ * TODOs and Nice to Haves
  *
  * Remove coupling with app delegate in favor of DI
  * Explicitly subscribe to missing icons and only reload cells that do not have it
@@ -147,7 +147,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.nameLabel?.textColor = UIConstants.appTextColor
             cell.dateLabel?.textColor = UIConstants.appTextColor
             cell.descriptionLabel?.textColor = UIConstants.appTextColor
-            
+            cell.selectionStyle = .none
             
             let report = reports[indexPath.row]
             

@@ -7,27 +7,29 @@
 
 import UIKit
 
+//
+
 class WeatherView: UIView {
     var report: NamedWeatherReport? {
         didSet {
             if let report = report {
                 nameLabel.text = report.name
                 descriptionLabel.text = report.report.weather[0].main
-                degreesLabel.text = "\(report.report.main.temp) F"
+                degreesLabel.text = "\(Int(report.report.main.temp)) °F"
                 
                 let dateExtractor = DateFormatter()
                 dateExtractor.dateFormat = "d MMM y, E"
                 dateLabel.text = dateExtractor.string(from: report.created)
                 
-                /*
+                
                 let formatter = DateFormatter()
                 formatter.dateFormat = "HH:mm"
                 let sunrize = Date(timeIntervalSince1970:Double(report.report.sys.sunrise))
-                sunriseLabel.text = "Sunrize: \(formatter.string(from: sunrize))"
+                sunriseLabel.text = "\(formatter.string(from: sunrize))"
                 
                 let sunset = Date(timeIntervalSince1970:Double(report.report.sys.sunset))
-                sunsetLabel.text = "Sunset: \(formatter.string(from:sunset))"
-                 */
+                sunsetLabel.text = "\(formatter.string(from:sunset))"
+                
                 
                 //windSpeed.text = "Wind speed: \(report.report.wind.speed)"
                 //windDirection.text = "Wind direction: \(report.report.wind.deg)"
