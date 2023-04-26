@@ -44,11 +44,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // (ex switch between memory and file store for debug / prod, stubs with network request data for unit tests, etc...
         
         let requestsHandler = URLRequestHandler()
-        let weatherApiGateway = OpenWeatherAPIGateway(requestsHandler: requestsHandler, apiKey: "0ea3dba95c348c47cfdae63c8c95f802")
+        let weatherApiGateway = OpenWeatherAPIGateway(requestsHandler: requestsHandler,
+                                                      apiKey: "0ea3dba95c348c47cfdae63c8c95f802")
+        
         //Reuse same request handler instance in pics controller to not write network logic twice:
         let picsController = WeatherPicsController(urlRequestsHandler: requestsHandler)
-        let persister = WeatherDataPersister()
-        let dataController = WeatherDataController(fetcher:weatherApiGateway , persister: persister)
+        let reportsStorage = UserDefaultsWeatherStorage()
+        let dataController = WeatherDataController(fetcher:weatherApiGateway, storage:reportsStorage)
         
 #if targetEnvironment(simulator)
         let locationProvider = LocationProviderFake()

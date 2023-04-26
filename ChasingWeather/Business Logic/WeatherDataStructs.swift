@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+
 // For the sake of simplicity these structs are extracted 1:1 from JSON response
 // Would be nice to only extract what is needed and flatten the response
 

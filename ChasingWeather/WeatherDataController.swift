@@ -9,31 +9,32 @@ import Foundation
 
 class WeatherDataController {
     
-    @Published var reports: Array<NamedWeatherReport>
-    
-    let fetcher: OpenWeatherAPIGateway
-    let persister: DataPersister
-    
-    init(fetcher: OpenWeatherAPIGateway, persister: DataPersister) {
-        self.fetcher = fetcher
-        self.persister = persister
-        
-        reports = persister.persistedReports()
+    var reports: [NamedWeatherReport] {
+        get {
+            storage.storedReports()
+        }
     }
     
-    func getWeather(_ coordinate: Coordinate, name: String, completion: @escaping (NamedWeatherReport? ) -> ()) {
+    let fetcher: OpenWeatherAPIGateway
+    let storage: WeatherStorage
+    
+    init(fetcher: OpenWeatherAPIGateway, storage: WeatherStorage) {
+        self.fetcher = fetcher
+        self.storage = storage
+    }
+    
+    func getWeather(_ coordinate: Coordinate,
+                    name: String,
+                    completion: @escaping (NamedWeatherReport? ) -> ()) {
         fetcher.getWeather(coordinate, name: name) { [weak self] report, error  in
-            guard let strongSelf = self else {
-                return
-            }
             
-            if let report {
-                var toSave = [report]
-                toSave.append(contentsOf: strongSelf.reports)
-                strongSelf.persister.persist(reports: toSave)
+            if let report, let self = self {
+                // Insert new report as first object to maintain array sorted by search date
+                var reportsToSave = [report]
+                reportsToSave.append(contentsOf: self.reports)
+                self.storage.store(reportsToSave)
             }
             completion(report)
-            strongSelf.reports = strongSelf.persister.persistedReports()
         }
     }
 }

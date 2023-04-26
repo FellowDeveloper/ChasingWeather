@@ -8,14 +8,14 @@
 import Foundation
 
 // Candidate to be generic?
-protocol DataPersister {
+protocol WeatherStorage {
     
-    func persist(reports: Array<NamedWeatherReport>)
-    func persistedReports() -> Array<NamedWeatherReport>
+    func store(_ reports: Array<NamedWeatherReport>)
+    func storedReports() -> Array<NamedWeatherReport>
 }
 
-struct WeatherDataPersister: DataPersister {
-    func persistedReports() -> Array<NamedWeatherReport> {
+struct UserDefaultsWeatherStorage: WeatherStorage {
+    func storedReports() -> Array<NamedWeatherReport> {
         
         if let data = UserDefaults.standard.value(forKey: reportsKey) as? Data {
             let decoder = JSONDecoder()
@@ -25,10 +25,9 @@ struct WeatherDataPersister: DataPersister {
         }
         
         return []
-        //UserDefaults.standard.value(forKey: reportsKey) as? Array<NamedWeatherReport> ?? []
     }
     
-    func persist(reports: Array<NamedWeatherReport>) {
+    func store(_ reports: Array<NamedWeatherReport>) {
         let encoder = JSONEncoder()
         if let encodedReports = try? encoder.encode(reports) {
             UserDefaults.standard.set(encodedReports, forKey: reportsKey)
