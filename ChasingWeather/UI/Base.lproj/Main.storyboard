@@ -70,89 +70,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="uM1-do-9ZG">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="San Jose" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sp-IL-Wya">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="37"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                        <color key="textColor" systemColor="systemGray6Color"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18*" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OYZ-Ch-Ng2">
-                                        <rect key="frame" x="0.0" y="46" width="393" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" systemColor="systemYellowColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18*" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91v-kU-0rE">
-                                        <rect key="frame" x="0.0" y="91" width="393" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" systemColor="systemYellowColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mostly Clear" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtH-VD-Uby">
-                                        <rect key="frame" x="0.0" y="136" width="393" height="37"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind Speed: 18mph" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IjC-vm-8oO">
-                                        <rect key="frame" x="0.0" y="182" width="393" height="25.333333333333343"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind Direction: NW" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tyc-5Q-Dd6">
-                                        <rect key="frame" x="0.0" y="216.33333333333331" width="393" height="25.333333333333343"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunrise: early" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFp-DQ-VW1">
-                                        <rect key="frame" x="0.0" y="250.66666666666671" width="393" height="25.333333333333343"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunset: late" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5f-vy-YjS">
-                                        <rect key="frame" x="0.0" y="285" width="393" height="25.333333333333314"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8K4-Cv-Bve" userLabel="Spacer">
-                                        <rect key="frame" x="0.0" y="319.33333333333326" width="393" height="346.66666666666674"/>
-                                        <color key="backgroundColor" red="0.14901960780000001" green="0.35294117650000001" blue="0.6588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </view>
-                                </subviews>
-                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nD3-Te-blJ">
+                                <rect key="frame" x="0.0" y="103" width="393" height="426"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Wvu-U4-MWb"/>
                         <color key="backgroundColor" red="0.14901960780000001" green="0.35294117650000001" blue="0.6588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" systemColor="systemGray5Color"/>
                         <constraints>
-                            <constraint firstItem="uM1-do-9ZG" firstAttribute="top" secondItem="Wvu-U4-MWb" secondAttribute="top" id="1AN-Vl-Cnd"/>
-                            <constraint firstItem="uM1-do-9ZG" firstAttribute="trailing" secondItem="Wvu-U4-MWb" secondAttribute="trailing" id="92e-xS-K8E"/>
-                            <constraint firstItem="Wvu-U4-MWb" firstAttribute="bottom" secondItem="uM1-do-9ZG" secondAttribute="bottom" id="pno-y1-5Ul"/>
-                            <constraint firstItem="uM1-do-9ZG" firstAttribute="leading" secondItem="Wvu-U4-MWb" secondAttribute="leading" id="ztc-ks-US0"/>
+                            <constraint firstItem="nD3-Te-blJ" firstAttribute="height" secondItem="CJo-9G-ZR4" secondAttribute="height" multiplier="0.5" id="J4K-St-W6J"/>
+                            <constraint firstItem="nD3-Te-blJ" firstAttribute="leading" secondItem="Wvu-U4-MWb" secondAttribute="leading" id="NkF-C3-AP0"/>
+                            <constraint firstItem="nD3-Te-blJ" firstAttribute="top" secondItem="Wvu-U4-MWb" secondAttribute="top" id="VYU-9P-7rd"/>
+                            <constraint firstItem="nD3-Te-blJ" firstAttribute="trailing" secondItem="Wvu-U4-MWb" secondAttribute="trailing" id="dt9-AY-l6T"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qXt-aH-WeB"/>
                     <connections>
-                        <outlet property="dateLabel" destination="91v-kU-0rE" id="StQ-Q3-nWe"/>
-                        <outlet property="degreesLabel" destination="OYZ-Ch-Ng2" id="HQe-PZ-ewp"/>
-                        <outlet property="mainDesriptionLabel" destination="WtH-VD-Uby" id="FdG-Rp-4lb"/>
-                        <outlet property="nameLabel" destination="5Sp-IL-Wya" id="oNR-pH-B0a"/>
-                        <outlet property="sunrizeLabel" destination="MFp-DQ-VW1" id="sM9-31-FuK"/>
-                        <outlet property="sunsetLabel" destination="h5f-vy-YjS" id="FbJ-ee-FUq"/>
-                        <outlet property="windDirection" destination="Tyc-5Q-Dd6" id="i9c-SV-9HA"/>
-                        <outlet property="windSpeed" destination="IjC-vm-8oO" id="gdq-PV-VBc"/>
+                        <outlet property="detailPlaceholder" destination="nD3-Te-blJ" id="Z9U-hq-fDU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0J3-fn-Jr5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-790" y="-60"/>
+            <point key="canvasLocation" x="-790.07633587786256" y="-60.563380281690144"/>
         </scene>
         <!--MainVC-->
         <scene sceneID="zOv-rc-23S">
@@ -220,14 +160,14 @@
     <resources>
         <image name="location.fill" catalog="system" width="128" height="119"/>
         <image name="map" catalog="system" width="128" height="112"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

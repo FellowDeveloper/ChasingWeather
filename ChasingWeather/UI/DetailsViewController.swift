@@ -18,18 +18,30 @@ class DetailsViewController: UIViewController {
         return controller
     }
     
+    
+    
     var report : NamedWeatherReport?
-
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var mainDesriptionLabel: UILabel!
-    @IBOutlet var degreesLabel: UILabel!
-    @IBOutlet var windSpeed: UILabel!
-    @IBOutlet var windDirection: UILabel!
-    @IBOutlet var sunrizeLabel: UILabel!
-    @IBOutlet var sunsetLabel: UILabel!
+    
+    @IBOutlet var detailPlaceholder: UIView!
+    var weatherView: WeatherView!
     
     override func viewWillAppear(_ animated: Bool) {
+        if weatherView == nil {
+            let weatherView: WeatherView = .fromNib()
+            
+            weatherView.translatesAutoresizingMaskIntoConstraints = false
+            detailPlaceholder.addSubview(weatherView)
+            
+            let constraints = [
+                weatherView.topAnchor.constraint(equalTo: detailPlaceholder.safeAreaLayoutGuide.topAnchor),
+                weatherView.leftAnchor.constraint(equalTo: detailPlaceholder.leftAnchor),
+                weatherView.rightAnchor.constraint(equalTo: detailPlaceholder.rightAnchor),
+                weatherView.bottomAnchor.constraint(equalTo: detailPlaceholder.bottomAnchor)
+            ]
+            NSLayoutConstraint.activate(constraints)
+            self.weatherView = weatherView
+        }
+        
         if let report {
             show(report)
         }
@@ -37,35 +49,10 @@ class DetailsViewController: UIViewController {
     
     fileprivate func updateUiStyle() {
         self.view.backgroundColor = UIConstants.appBackgroundColor
-        
-        for textLabel in [nameLabel, mainDesriptionLabel, degreesLabel, windSpeed, windDirection, sunrizeLabel, sunsetLabel] {
-            textLabel?.textColor = UIConstants.appTextColor
-        }
     }
     
     private func show(_ report: NamedWeatherReport?) {
-        
         updateUiStyle()
-        
-        if let report {
-            nameLabel.text = report.name
-            mainDesriptionLabel.text = report.report.weather[0].main
-            degreesLabel.text = "Temp: \(report.report.main.temp)"
-            let dateExtractor = DateFormatter()
-            dateExtractor.dateFormat = "d MMM y, E"
-            dateLabel.text = dateExtractor.string(from: report.created)
-            
-            //TODO: Date formatting to have time only
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            let sunrize = Date(timeIntervalSince1970:Double(report.report.sys.sunrise))
-            sunrizeLabel.text = "Sunrize: \(formatter.string(from: sunrize))"
-            
-            let sunset = Date(timeIntervalSince1970:Double(report.report.sys.sunset))
-            sunsetLabel.text = "Sunset: \(formatter.string(from:sunset))"
-            
-            windSpeed.text = "Wind speed: \(report.report.wind.speed)"
-            windDirection.text = "Wind direction: \(report.report.wind.deg)"
-        }
+        weatherView?.report = report
     }
 }
